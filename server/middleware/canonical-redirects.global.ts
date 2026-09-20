@@ -78,7 +78,7 @@ export default defineEventHandler(async event => {
               event,
               `/package-code/${packageName}/v/${latestVersion}` +
                 (remaining ? '?' + remaining : ''),
-              301,
+              302,
             )
           }
         }
