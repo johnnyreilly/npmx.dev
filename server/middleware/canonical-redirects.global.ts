@@ -75,7 +75,7 @@ export default defineEventHandler(async event => {
           return sendRedirect(
             event,
             `/package-code/${packageName}/v/${version}` + (remaining ? '?' + remaining : ''),
-            302,
+            301,
           )
         }
 
@@ -94,7 +94,7 @@ export default defineEventHandler(async event => {
               event,
               `/package-code/${packageName}/v/${latestVersion}` +
                 (remaining ? '?' + remaining : ''),
-              302,
+              302, // 302 as the latest version may change over time causing the redirect to change
             )
           }
         }
