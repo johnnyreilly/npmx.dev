@@ -171,6 +171,24 @@ test.describe('npmjs.com URL Compatibility', () => {
 
       await expect(page).toHaveURL(/\/package-code\/@nuxt\/kit\/v\/\d+\.\d+\.\d+/)
     })
+
+    test('/package/vue/v/3.5.27?activeTab=code → /package-code/vue/v/3.5.27 (pinned version, not latest)', async ({
+      page,
+      goto,
+    }) => {
+      await goto('/package/vue/v/3.5.27?activeTab=code', { waitUntil: 'domcontentloaded' })
+
+      await expect(page).toHaveURL(/\/package-code\/vue\/v\/3\.5\.27$/)
+    })
+
+    test('/package/@nuxt/kit/v/3.20.0?activeTab=code → /package-code/@nuxt/kit/v/3.20.0 (pinned version, not latest)', async ({
+      page,
+      goto,
+    }) => {
+      await goto('/package/@nuxt/kit/v/3.20.0?activeTab=code', { waitUntil: 'domcontentloaded' })
+
+      await expect(page).toHaveURL(/\/package-code\/@nuxt\/kit\/v\/3\.20\.0$/)
+    })
   })
 
   test.describe('Edge Cases', () => {
