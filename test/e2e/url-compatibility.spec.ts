@@ -156,6 +156,23 @@ test.describe('npmjs.com URL Compatibility', () => {
     })
   })
 
+  test.describe('npmjs.com activeTab=code Compatibility', () => {
+    test('/package/vue?activeTab=code → /package-code/vue/v/<latest>', async ({ page, goto }) => {
+      await goto('/package/vue?activeTab=code', { waitUntil: 'domcontentloaded' })
+
+      await expect(page).toHaveURL(/\/package-code\/vue\/v\/\d+\.\d+\.\d+/)
+    })
+
+    test('/package/@nuxt/kit?activeTab=code → /package-code/@nuxt/kit/v/<latest>', async ({
+      page,
+      goto,
+    }) => {
+      await goto('/package/@nuxt/kit?activeTab=code', { waitUntil: 'domcontentloaded' })
+
+      await expect(page).toHaveURL(/\/package-code\/@nuxt\/kit\/v\/\d+\.\d+\.\d+/)
+    })
+  })
+
   test.describe('Edge Cases', () => {
     test('package name with dots: /package/lodash.merge', async ({ page, goto }) => {
       await goto('/package/lodash.merge', { waitUntil: 'domcontentloaded' })

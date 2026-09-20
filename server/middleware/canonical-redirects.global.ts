@@ -62,6 +62,28 @@ export default defineEventHandler(async event => {
         }
         break
       }
+      case 'code': {
+        // /package/name?activeTab=code → /package-code/name/v/<latest-version>
+        // /package/@scope/name?activeTab=code → /package-code/@scope/name/v/<latest-version>
+
+        const pkgPathMatch = path.match(/^\/package\/((?:@[^/]+\/)?[^/]+)$/)
+        const packageName = pkgPathMatch?.[1]
+        if (packageName) {
+          const latestVersion = await fetchLatestVersion(packageName)
+          if (latestVersion) {
+            params.delete('activeTab')
+            const remaining = params.toString()
+            setHeader(event, 'cache-control', cacheControl)
+            return sendRedirect(
+              event,
+              `/package-code/${packageName}/v/${latestVersion}` +
+                (remaining ? '?' + remaining : ''),
+              301,
+            )
+          }
+        }
+        break
+      }
     }
   }
 
