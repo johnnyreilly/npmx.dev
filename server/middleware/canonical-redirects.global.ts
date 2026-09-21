@@ -75,7 +75,7 @@ export default defineEventHandler(async event => {
           return sendRedirect(
             event,
             `/package-code/${packageName}/v/${version}` + (remaining ? '?' + remaining : ''),
-            301,
+            308,
           )
         }
 
